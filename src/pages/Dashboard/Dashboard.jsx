@@ -1,11 +1,13 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, redirect } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 // import hamburger from "../../assets/hamburger-menu.png";
 import { FcDoughnutChart } from "react-icons/fc";
 import { FaDotCircle } from "react-icons/fa";
 
 const Dashboard = () => {
+
+
   return (
     <>
       <section>
