@@ -18,7 +18,7 @@ const PendingOrder = () => {
         <div className="overflow-x-auto new_boxshadow bg-white rounded-xl">
           <table className="table table-zebra rounded-lg border  w-full">
             <thead>
-              <tr className="text-center rounded-xl bg-[#FE9553]">
+              <tr className="text-center text-black rounded-xl bg-[#FE9553]">
                 <th className="">NO.</th>
                 <th>Ordered Package</th>
                 <th>Name</th>
@@ -34,7 +34,7 @@ const PendingOrder = () => {
               {pendingOrders.map((order, index) => (
                 <tr className="border text-center">
                   <th className="bg-gray-100 border">{index + 1}</th>
-                  <td className="bg-gray-100 font-sans text-lg border">{order.orderedPackage}</td>
+                  <td className="bg-gray-100 font-sans font-medium text-lg border">{order.orderedPackage}</td>
                   <td className="bg-gray-100 border">{order.name}</td>
                   <td className="bg-gray-100 border">{order.address}</td>
                   <td className="bg-gray-100 border">{order.number}</td>
