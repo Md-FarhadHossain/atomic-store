@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { toast } from "react-hot-toast";
+import { UserContext } from '../../../context/AuthContext';
 
 const NewOrder = () => {
     const [newOrders, setNewOrders] = useState([])
+    const { orderStatusUpadte, setOrderStatusUpadte } = useContext(UserContext);
+    // const [orderStatusUpadte, setOrderStatusUpadte] = useState(false)
 
   useEffect(() => {
     fetch("https://atomic-store.vercel.app/orders?orderStatus=neworder")
@@ -9,12 +13,37 @@ const NewOrder = () => {
       .then((data) => {
         console.log(data);
         setNewOrders(data);
+      
       });
-  }, []);
+  }, [orderStatusUpadte]);
 
-  const handlePending = (event) => {
-    event.preventDefault()
-    console.log('working')
+  const handlePending = async (order) => {
+    // event.preventDefault()
+    const orderStatus = 'pending'
+    const result = {
+      orderStatus
+    }
+
+  await  fetch(`http://localhost:5000/orders/${order._id}`, {
+      method: 'PUT',
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(result),
+    })
+    .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if(data.acknowledged){
+          toast.success('Order is pending Now!')
+          setOrderStatusUpadte(!orderStatusUpadte)
+        }
+      });
+  
+
+
+
+    console.log(order._id,orderStatus)
     
   }
 
@@ -41,7 +70,7 @@ const NewOrder = () => {
             </thead>
             <tbody>
               {newOrders.map((order, index) => (
-                <tr className="border text-center">
+                <tr key={order._id} className="border text-center">
                   <th>{index + 1}</th>
                   <td>{order.orderedPackage}</td>
                   <td>{order.name}</td>
@@ -55,7 +84,8 @@ const NewOrder = () => {
                   <td>
                     <button>
                       <select className="select border-gray-300 select-xs select-bordered w-full max-w-xs">
-                        <option onClick={handlePending} selected>Pending</option>
+                      <option disabled selected>Take Action</option>
+                        <option onClick={() => handlePending(order)} >Pending</option>
                         <option>Cencel</option>
                       </select>
                     </button>

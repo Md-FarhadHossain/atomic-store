@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../context/AuthContext";
 import { BiBell } from "react-icons/bi";
 
+
 const Navbar = () => {
-  const { user, logout } = useContext(UserContext);
-  const [pendingOrders, setPendingOrders] = useState([]);
+  const { user, logout, orderStatusUpadte } = useContext(UserContext);
+  const [newOrders, setnewOrders] = useState([]);
+  const [notificationBox, setNotificationBox] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -16,15 +18,22 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    fetch("https://atomic-store.vercel.app/orders")
+    fetch("https://atomic-store.vercel.app/orders?orderStatus=neworder")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setPendingOrders(data);
+        setnewOrders(data);
       });
-  }, []);
+  }, [orderStatusUpadte]);
+
+
+  const handleNotification = () => {
+    setNotificationBox(!notificationBox)
+    console.log('working')
+  }
+
   return (
-    <nav className="shadow-md z-10 sticky top-0 bg-white">
+    <nav className="z-10 sticky top-0 bg-white">
       <div className="navbar container mx-auto">
         <div className="flex-1">
           <Link to="/" className="">
@@ -68,12 +77,23 @@ const Navbar = () => {
             ) : (
               <>
                 {" "}
-                <li className="lg:flex md:flex hidden font-semibold">
+                <li  onClick={handleNotification} className="lg:flex md:flex hidden font-semibold">
                   <a className="text-3xl" href="#">
                     <BiBell />
-                    <span className="text-sm bg-red-500 absolute top-3 left-8 w-6 h-6 flex justify-center items-center text-white rounded-full">
-                      {pendingOrders.length}
+                    {newOrders.length == 0 ? <></> : <><span className="text-sm bg-red-500 absolute top-3 left-8 w-6 h-6 flex justify-center items-center text-white rounded-full">
+                      {newOrders.length}
                     </span>
+                    {/* Message box */}
+                      <div className={`absolute  ${notificationBox ? 'inline-block' : 'hidden'}  border top-[5rem] bg-white new_boxshadow p-4 rounded-lg overflow-y-scroll w-[20rem] h-[10rem]`}>
+                        {
+                          newOrders.map((order, index) => <div>
+                            <h1 className="text-lg font-sans ">{index + 1}. {order.orderedPackage}</h1>
+                          </div>)
+                        }
+                      </div>
+                      {/* Message box end */}
+
+                    </>}
                   </a>
                 </li>
                 <li className="">
@@ -86,6 +106,8 @@ const Navbar = () => {
                     <Button>Dashboard</Button>
                   </Link>
                 </li>
+
+                
               </>
             )}
           </ul>

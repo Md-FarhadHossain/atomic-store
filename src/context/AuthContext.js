@@ -19,6 +19,8 @@ const AuthContext = ({ children }) => {
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
+  const [orderStatusUpadte, setOrderStatusUpadte] = useState(false)
+
   // Sign up with email and password
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -61,6 +63,8 @@ const AuthContext = ({ children }) => {
     updateUser,
     googleSignin,
     loading,
+    setOrderStatusUpadte,
+    orderStatusUpadte
   };
   return (
     <UserContext.Provider value={authValue}>{children}</UserContext.Provider>
