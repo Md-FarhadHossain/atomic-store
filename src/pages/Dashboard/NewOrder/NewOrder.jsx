@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from "react-hot-toast";
 import { UserContext } from '../../../context/AuthContext';
+import { BsFillCloudHailFill } from "react-icons/bs";
 
 const NewOrder = () => {
     const [newOrders, setNewOrders] = useState([])
@@ -49,8 +50,8 @@ const NewOrder = () => {
 
   return (
     <div>
-        
-        NewOrder {newOrders.length}
+          
+          NewOrder {newOrders.length}
 
         <section className="p-6">
         <div className="overflow-x-auto new_boxshadow bg-white rounded-xl">
@@ -69,6 +70,11 @@ const NewOrder = () => {
               </tr>
             </thead>
             <tbody>
+
+            {newOrders.length == 0 ? <><div className='flex relative left-[44rem] py-8 justify-center w-full'>
+                <span className='text-[10rem] text-gray-200'>{<BsFillCloudHailFill />}</span>
+                </div> <p className='text-center relative left-[44rem] pb-8 text-gray-300 font-semibold'>You have 0 new order</p></> : <></>}
+              
               {newOrders.map((order, index) => (
                 <tr key={order._id} className="border text-center">
                   <th className="bg-gray-100 border">{index + 1}</th>
@@ -92,6 +98,8 @@ const NewOrder = () => {
                   </td>
                 </tr>
               ))}
+
+              
             </tbody>
             <tfoot>
               <tr className="text-center bg-gray-100">
