@@ -71,9 +71,9 @@ const NewOrder = () => {
             </thead>
             <tbody>
 
-            {newOrders.length == 0 ? <><div className='flex relative left-[44rem] py-8 justify-center w-full'>
+            {newOrders.length == 0 ? <><div className='flex relative left-[41rem] py-8 justify-center w-full'>
                 <span className='text-[10rem] text-gray-200'>{<BsFillCloudHailFill />}</span>
-                </div> <p className='text-center relative left-[44rem] pb-8 text-gray-300 font-semibold'>You have 0 new order</p></> : <></>}
+                </div> <p className='text-center relative left-[41rem] pb-8 text-gray-300 font-semibold'>You have 0 new order</p></> : <></>}
               
               {newOrders.map((order, index) => (
                 <tr key={order._id} className="border text-center">
