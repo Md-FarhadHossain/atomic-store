@@ -64,7 +64,6 @@ const Navbar = () => {
               <></>
             )}
 
-            {/* <li className=""><a href="#order_section"><Button>অর্ডার করুন</Button></a></li> */}
 
             {!user ? (
               <>
